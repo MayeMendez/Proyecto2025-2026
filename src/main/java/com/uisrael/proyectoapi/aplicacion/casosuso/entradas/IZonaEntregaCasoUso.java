@@ -6,9 +6,10 @@ import com.uisrael.proyectoapi.dominio.entidades.ZonaEntrega;
 
 public interface IZonaEntregaCasoUso {
 
-	ZonaEntrega crear(ZonaEntrega zonantrega);
+	ZonaEntrega crear(ZonaEntrega zonaEntrega);
 	ZonaEntrega obtenerPorId(int id);
 	List<ZonaEntrega> listar();
+	ZonaEntrega actualizar(int id,ZonaEntrega zonaEntrega);
 	void eliminar(int id);
 	
 }

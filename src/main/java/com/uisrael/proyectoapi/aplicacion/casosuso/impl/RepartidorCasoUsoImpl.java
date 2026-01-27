@@ -3,6 +3,7 @@ package com.uisrael.proyectoapi.aplicacion.casosuso.impl;
 import java.util.List;
 
 import com.uisrael.proyectoapi.aplicacion.casosuso.entradas.IRepartidorCasoUso;
+import com.uisrael.proyectoapi.dominio.entidades.DetallePedido;
 import com.uisrael.proyectoapi.dominio.entidades.Repartidor;
 import com.uisrael.proyectoapi.dominio.repositorios.IRepartidorRepositorio;
 
@@ -42,5 +43,12 @@ public class RepartidorCasoUsoImpl implements IRepartidorCasoUso{
 		repositorio.eliminar(id);
 		
 	}
+	
+	@Override
+	public Repartidor actualizar(int id, Repartidor repartidor) {
+	    obtenerPorId(id);                
+	    return repositorio.actualizar(id, repartidor); 
+	}
+
 
 }

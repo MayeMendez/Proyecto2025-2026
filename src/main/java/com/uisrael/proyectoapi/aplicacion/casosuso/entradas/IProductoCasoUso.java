@@ -9,6 +9,7 @@ public interface IProductoCasoUso {
 	Producto crear(Producto producto);
 	Producto obtenerPorId(int id);
 	List<Producto> listar();
+	Producto actualizar(int id,Producto producto);
 	void eliminar(int id);
 	
 }

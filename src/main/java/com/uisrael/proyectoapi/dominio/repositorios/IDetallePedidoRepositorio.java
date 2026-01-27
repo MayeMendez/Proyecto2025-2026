@@ -9,6 +9,7 @@ public interface IDetallePedidoRepositorio {
 
 	DetallePedido guardar(DetallePedido detallePedido);
 	Optional<DetallePedido> buscarPorId(int id);
+	DetallePedido actualizar(int id, DetallePedido detallePedido);
 	List<DetallePedido> listarTodos();
 	void eliminar(int id);
 }

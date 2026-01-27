@@ -31,7 +31,7 @@ public class ClienteJpa implements Serializable {
 	@Column(name = "nombre_comercial", length = 150)
 	private String nombre_comercial;
 
-	@Column(name = "identificacion", nullable = false, unique = true, length = 20)
+	@Column(name = "identificacion", nullable = false, unique = true, updatable=false,length = 20)
 	private String identificacion;
 
 	@Column(name = "telefono", length = 20)

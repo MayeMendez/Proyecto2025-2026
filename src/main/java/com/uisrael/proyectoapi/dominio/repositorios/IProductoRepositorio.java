@@ -11,4 +11,6 @@ public interface IProductoRepositorio {
 	Optional<Producto> buscarPorId(int id);
 	List<Producto> listarTodos();
 	void eliminar(int id);
+	Producto actualizar(int id, Producto producto);
+
 }

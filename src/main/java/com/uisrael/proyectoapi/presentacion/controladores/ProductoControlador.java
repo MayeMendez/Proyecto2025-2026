@@ -3,8 +3,11 @@ package com.uisrael.proyectoapi.presentacion.controladores;
 import java.util.List;
 
 import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -28,7 +31,6 @@ public class ProductoControlador {
 	
 	//constructor
 	public ProductoControlador(IProductoCasoUso productoCasoUso, IProductoDTOMapper mapper) {
-		super();
 		this.productoCasoUso = productoCasoUso;
 		this.mapper = mapper;
 	}
@@ -38,11 +40,32 @@ public class ProductoControlador {
 		return productoCasoUso.listar().stream().map(mapper::toResponseDTO).toList();
 	}
 	
+	
+	 @GetMapping("/{id}")
+	 public ProductoResponseDTO obtenerPorId(@PathVariable int id) {
+	        return mapper.toResponseDTO(productoCasoUso.obtenerPorId(id));
+	 }
+	
 	@PostMapping
 	@ResponseStatus(HttpStatus.CREATED)
 	public ProductoResponseDTO crear(@Valid @RequestBody ProductoRequestDTO request) {
 		return mapper.toResponseDTO(productoCasoUso.crear(mapper.toDomain(request)));
 	}
 	
+	@PutMapping("/{id}")
+    public ProductoResponseDTO actualizar(
+            @PathVariable int id,
+            @Valid @RequestBody ProductoRequestDTO request) {
+
+        return mapper.toResponseDTO(productoCasoUso.actualizar(id, mapper.toDomain(request)));
+    }
+
+    @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void eliminar(@PathVariable int id) {
+        productoCasoUso.eliminar(id);
+    }
+
+	  
 	
 }

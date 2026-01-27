@@ -43,6 +43,10 @@ public class DetallePedidoCasoUsoImpl implements IDetallePedidoCasoUso{
 		
 	}
 
-	
-	
+	@Override
+	public DetallePedido actualizar(int id, DetallePedido detallePedido) {
+	    obtenerPorId(id);                
+	    return repositorio.actualizar(id, detallePedido); 
+	}
+
 }

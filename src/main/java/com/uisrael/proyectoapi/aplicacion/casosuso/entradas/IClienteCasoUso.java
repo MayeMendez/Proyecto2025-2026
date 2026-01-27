@@ -9,6 +9,7 @@ public interface IClienteCasoUso {
 	Cliente crear(Cliente cliente);
 	Cliente obtenerPorId(int id);
 	List<Cliente> listar();
+	Cliente actualizar(int id, Cliente cliente);
 	void eliminar(int id);
 	
 }

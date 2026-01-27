@@ -2,33 +2,22 @@ package com.uisrael.proyectoapi.dominio.entidades;
 
 public final class DetallePedido {
 
-	private final int id_detalle_pedido;
-	private final int id_pedido;
-	private final int id_producto;
-	private final int cantidad;
+	private final Integer id_detalle_pedido;
+	private final Integer id_pedido;
+	private final Integer id_producto;
+	private final Integer cantidad;
 	private final double precio_unitario;
 	private final double subtotal;
-	
-	public DetallePedido(int id_detalle_pedido, int id_pedido, int id_producto, int cantidad, double precio_unitario,
-			double subtotal) {
-		super();
-		this.id_detalle_pedido = id_detalle_pedido;
-		this.id_pedido = id_pedido;
-		this.id_producto = id_producto;
-		this.cantidad = cantidad;
-		this.precio_unitario = precio_unitario;
-		this.subtotal = subtotal;
-	}
-	public int getId_detalle_pedido() {
+	public Integer getId_detalle_pedido() {
 		return id_detalle_pedido;
 	}
-	public int getId_pedido() {
+	public Integer getId_pedido() {
 		return id_pedido;
 	}
-	public int getId_producto() {
+	public Integer getId_producto() {
 		return id_producto;
 	}
-	public int getCantidad() {
+	public Integer getCantidad() {
 		return cantidad;
 	}
 	public double getPrecio_unitario() {
@@ -43,6 +32,17 @@ public final class DetallePedido {
 				+ id_producto + ", cantidad=" + cantidad + ", precio_unitario=" + precio_unitario + ", subtotal="
 				+ subtotal + "]";
 	}
-
+	public DetallePedido(Integer id_detalle_pedido, Integer id_pedido, Integer id_producto, Integer cantidad,
+			double precio_unitario, double subtotal) {
+		super();
+		this.id_detalle_pedido = id_detalle_pedido;
+		this.id_pedido = id_pedido;
+		this.id_producto = id_producto;
+		this.cantidad = cantidad;
+		this.precio_unitario = precio_unitario;
+		this.subtotal = subtotal;
+	}
+	
+	
 
 }

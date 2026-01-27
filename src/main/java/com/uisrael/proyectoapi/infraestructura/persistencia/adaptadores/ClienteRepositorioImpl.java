@@ -25,7 +25,7 @@ public class ClienteRepositorioImpl implements IClienteRepositorio{
 	
 	@Override
 	public Cliente guardar(Cliente cliente) {
-		ClienteJpa entity = entityMapper.toEntity(cliente);
+		ClienteJpa entity = entityMapper.toEntityCrear(cliente);
 		ClienteJpa guardado = jpaRepositorio.save(entity);
 		return entityMapper.toDomain(guardado);
 	}
@@ -50,6 +50,26 @@ public class ClienteRepositorioImpl implements IClienteRepositorio{
 		
 	}
 	
+	@Override
+	public Cliente actualizar(int id, Cliente cliente) {
+
+	    ClienteJpa entity = jpaRepositorio.findById(id)
+	        .orElseThrow(() -> new RuntimeException("Cliente no encontrado"));
+
+	    entity.setTipo_cliente(cliente.getTipo_cliente());
+	    entity.setRazon_social(cliente.getRazon_social());
+	    entity.setNombre_comercial(cliente.getNombre_comercial());
+	    entity.setTelefono(cliente.getTelefono());
+	    entity.setEmail(cliente.getEmail());
+	    entity.setDireccion(cliente.getDireccion());
+
+	  
+	    // entity.setIdentificacion(...); 
+
+	    ClienteJpa guardado = jpaRepositorio.save(entity);
+	    return entityMapper.toDomain(guardado);
+	}
+
 	
 
 }

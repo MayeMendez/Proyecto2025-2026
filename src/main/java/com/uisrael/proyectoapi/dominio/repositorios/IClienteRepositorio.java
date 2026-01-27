@@ -10,5 +10,8 @@ public interface IClienteRepositorio {
 	Cliente guardar(Cliente cliente);
 	Optional<Cliente> buscarPorId(int id);
 	List<Cliente> listarTodos();
+	Cliente actualizar(int id, Cliente cliente);
 	void eliminar(int id);
+	
+
 }

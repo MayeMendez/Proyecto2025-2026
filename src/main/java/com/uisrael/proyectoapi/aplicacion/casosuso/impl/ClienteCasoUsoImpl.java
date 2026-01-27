@@ -40,6 +40,10 @@ public class ClienteCasoUsoImpl implements IClienteCasoUso{
 		repositorio.eliminar(id);
 	}
 
-	
+	@Override
+	public Cliente actualizar(int id, Cliente cliente) {
+	    obtenerPorId(id);
+	    return repositorio.actualizar(id, cliente);
+	}
 	
 }

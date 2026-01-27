@@ -3,6 +3,7 @@ package com.uisrael.proyectoapi.aplicacion.casosuso.impl;
 import java.util.List;
 
 import com.uisrael.proyectoapi.aplicacion.casosuso.entradas.IZonaEntregaCasoUso;
+import com.uisrael.proyectoapi.dominio.entidades.RutaEntrega;
 import com.uisrael.proyectoapi.dominio.entidades.ZonaEntrega;
 import com.uisrael.proyectoapi.dominio.repositorios.IZonaEntregaRepositorio;
 
@@ -41,6 +42,12 @@ public class ZonaEntregaCasoUsoImpl implements IZonaEntregaCasoUso{
 	public void eliminar(int id) {
 		repositorio.eliminar(id);
 		
+	}
+
+	@Override
+	public ZonaEntrega actualizar(int id, ZonaEntrega zonaEntrega) {
+	    obtenerPorId(id);                
+	    return repositorio.actualizar(id, zonaEntrega); 
 	}
 
 }

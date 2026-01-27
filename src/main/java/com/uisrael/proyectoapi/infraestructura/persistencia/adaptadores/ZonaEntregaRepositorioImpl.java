@@ -9,28 +9,27 @@ import com.uisrael.proyectoapi.infraestructura.persistencia.jpa.ZonaEntregaJpa;
 import com.uisrael.proyectoapi.infraestructura.persistencia.mapeadores.IZonaEntregaJpaMapper;
 import com.uisrael.proyectoapi.infraestructura.repositorios.IZonaEntregaJpaRepositorio;
 
-public class ZonaEntregaRepositorioImpl implements IZonaEntregaRepositorio{
+public class ZonaEntregaRepositorioImpl implements IZonaEntregaRepositorio {
 
-	//dependencias
-	
+	// dependencias
+
 	private final IZonaEntregaJpaRepositorio jpaRepositorio;
 	private final IZonaEntregaJpaMapper entityMapper;
-	
-	//constructor
-	
+
+	// constructor
+
 	public ZonaEntregaRepositorioImpl(IZonaEntregaJpaRepositorio jpaRepositorio, IZonaEntregaJpaMapper entityMapper) {
-	
+
 		this.jpaRepositorio = jpaRepositorio;
 		this.entityMapper = entityMapper;
 	}
-	
+
 	@Override
 	public ZonaEntrega guardar(ZonaEntrega zonaEntrega) {
 		ZonaEntregaJpa entity = entityMapper.toEntity(zonaEntrega);
 		ZonaEntregaJpa guardado = jpaRepositorio.save(entity);
 		return entityMapper.toDomain(guardado);
 	}
-
 
 	@Override
 	public Optional<ZonaEntrega> buscarPorId(int id) {
@@ -39,16 +38,27 @@ public class ZonaEntregaRepositorioImpl implements IZonaEntregaRepositorio{
 
 	@Override
 	public List<ZonaEntrega> listarTodos() {
-		return jpaRepositorio.findAll()
-				.stream()
-				.map(entityMapper::toDomain)
-				.toList();
+		return jpaRepositorio.findAll().stream().map(entityMapper::toDomain).toList();
 	}
 
 	@Override
 	public void eliminar(int id) {
 		jpaRepositorio.deleteById(id);
-		
+
+	}
+
+	@Override
+	public ZonaEntrega actualizar(int id, ZonaEntrega zonaEntrega) {
+
+		ZonaEntregaJpa entity = jpaRepositorio.findById(id)
+				.orElseThrow(() -> new RuntimeException("Zona de entrega no encontrada"));
+
+		entity.setNombre_zona(zonaEntrega.getNombre_zona());
+		entity.setCiudad(zonaEntrega.getCiudad());
+		entity.setProvincia(zonaEntrega.getProvincia());
+
+		ZonaEntregaJpa guardado = jpaRepositorio.save(entity);
+		return entityMapper.toDomain(guardado);
 	}
 
 }

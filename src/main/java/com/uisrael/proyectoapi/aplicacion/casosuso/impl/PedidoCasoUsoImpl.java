@@ -44,4 +44,12 @@ public class PedidoCasoUsoImpl implements IPedidoCasoUso{
 		
 	}
 
+
+	@Override
+	public Pedido actualizar(int id, Pedido pedido) {
+	    obtenerPorId(id);                
+	    return repositorio.actualizar(id, pedido); 
+	}
+
+
 }

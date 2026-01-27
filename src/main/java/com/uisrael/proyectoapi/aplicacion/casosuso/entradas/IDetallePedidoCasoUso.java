@@ -8,6 +8,7 @@ public interface IDetallePedidoCasoUso {
 
 	DetallePedido crear(DetallePedido detallePedido);
 	DetallePedido obtenerPorId(int id);
+	DetallePedido actualizar(int id,DetallePedido detallePedido);
 	List<DetallePedido> listar();
 	void eliminar(int id);
 	

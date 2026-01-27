@@ -43,4 +43,10 @@ public class ProductoCasoUsoImpl implements IProductoCasoUso{
 		repositorio.eliminar(id);
 	}
 
+	@Override
+	public Producto actualizar(int id, Producto producto) {
+	    obtenerPorId(id);                
+	    return repositorio.actualizar(id, producto); 
+	}
+
 }

@@ -1,6 +1,7 @@
 package com.uisrael.proyectoapi.infraestructura.persistencia.mapeadores;
 
 import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
 
 import com.uisrael.proyectoapi.dominio.entidades.Cliente;
 import com.uisrael.proyectoapi.infraestructura.persistencia.jpa.ClienteJpa;
@@ -9,6 +10,10 @@ import com.uisrael.proyectoapi.infraestructura.persistencia.jpa.ClienteJpa;
 public interface IClienteJpaMapper {
 
 	Cliente toDomain(ClienteJpa entity);
-	ClienteJpa toEntity(Cliente cliente);
-	
+
+	@Mapping(target = "id_cliente", ignore = true)
+	ClienteJpa toEntityCrear(Cliente cliente);
+
+	ClienteJpa toEntityActualizar(Cliente cliente);
+
 }

@@ -10,5 +10,6 @@ public interface IPedidoRepositorio {
 	Pedido guardar(Pedido pedido);
 	Optional<Pedido> buscarPorId(int id);
 	List<Pedido> listarTodos();
+	Pedido actualizar(int id, Pedido pedido);
 	void eliminar(int id);
 }

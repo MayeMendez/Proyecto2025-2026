@@ -3,6 +3,7 @@ package com.uisrael.proyectoapi.aplicacion.casosuso.impl;
 import java.util.List;
 
 import com.uisrael.proyectoapi.aplicacion.casosuso.entradas.IRutaEntregaCasoUso;
+import com.uisrael.proyectoapi.dominio.entidades.Repartidor;
 import com.uisrael.proyectoapi.dominio.entidades.RutaEntrega;
 import com.uisrael.proyectoapi.dominio.repositorios.IRutaEntregaRepositorio;
 
@@ -42,6 +43,13 @@ public class RutaEntregaCasoUsoImpl implements IRutaEntregaCasoUso{
 	public void eliminar(int id) {
 		repositorio.eliminar(id);
 		
+	}
+
+
+	@Override
+	public RutaEntrega actualizar(int id, RutaEntrega rutaEntrega) {
+	    obtenerPorId(id);                
+	    return repositorio.actualizar(id, rutaEntrega); 
 	}
 
 }

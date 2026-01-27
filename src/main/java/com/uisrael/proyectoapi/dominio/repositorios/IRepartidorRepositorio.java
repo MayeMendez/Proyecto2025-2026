@@ -10,5 +10,6 @@ public interface IRepartidorRepositorio {
 	Repartidor guardar(Repartidor repartidor);
 	Optional<Repartidor> buscarPorId(int id);
 	List<Repartidor> listarTodos();
+	Repartidor actualizar(int id, Repartidor repartidor);
 	void eliminar(int id);
 }
