@@ -7,6 +7,7 @@ public final class RutaEntrega {
 	private final String nombre_ruta;
 	private final double distancia_estimada_km;
 	private final int tiempo_estimado_min;
+	
 	public Integer getId_ruta_entrega() {
 		return id_ruta_entrega;
 	}

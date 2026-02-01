@@ -26,12 +26,9 @@ import jakarta.validation.Valid;
 @RequestMapping("/api/detallePedido")
 public class DetallePedidoControlador {
 
-	// dependencias de la arquitectura
+	private final IDetallePedidoCasoUso detallePedidoCasoUso;
+	private final IDetallePedidoDTOMapper mapper;
 
-	private final IDetallePedidoCasoUso detallePedidoCasoUso;// casos de uso
-	private final IDetallePedidoDTOMapper mapper; // mapeadores
-
-	// constructor
 	public DetallePedidoControlador(IDetallePedidoCasoUso detallePedidoCasoUso, IDetallePedidoDTOMapper mapper) {
 		this.detallePedidoCasoUso = detallePedidoCasoUso;
 		this.mapper = mapper;
@@ -39,10 +36,10 @@ public class DetallePedidoControlador {
 
 	@GetMapping
 	public List<DetallePedidoResponseDTO> listar() {
-
 		return detallePedidoCasoUso.listar().stream().map(mapper::toResponseDTO).toList();
 	}
 
+	@GetMapping("/{id}")
 	public DetallePedidoResponseDTO obtenerPorId(@PathVariable int id) {
 		return mapper.toResponseDTO(detallePedidoCasoUso.obtenerPorId(id));
 	}
@@ -50,9 +47,8 @@ public class DetallePedidoControlador {
 	@PostMapping
 	public ResponseEntity<DetallePedido> crear(@RequestBody DetallePedidoRequestDTO dto) {
 
-		DetallePedido det = new DetallePedido(null,
-				dto.getId_pedido(), dto.getId_producto(), dto.getCantidad(), dto.getPrecio_unitario(),
-				dto.getSubtotal());
+		DetallePedido det = new DetallePedido(null, dto.getId_pedido(), dto.getId_producto(), dto.getCantidad(),
+				dto.getPrecio_unitario(), dto.getSubtotal());
 
 		return ResponseEntity.ok(detallePedidoCasoUso.crear(det));
 	}
@@ -60,7 +56,6 @@ public class DetallePedidoControlador {
 	@PutMapping("/{id}")
 	public DetallePedidoResponseDTO actualizar(@PathVariable int id,
 			@Valid @RequestBody DetallePedidoRequestDTO request) {
-
 		return mapper.toResponseDTO(detallePedidoCasoUso.actualizar(id, mapper.toDomain(request)));
 	}
 
@@ -69,5 +64,4 @@ public class DetallePedidoControlador {
 	public void eliminar(@PathVariable int id) {
 		detallePedidoCasoUso.eliminar(id);
 	}
-
 }

@@ -8,6 +8,7 @@ public final class DetallePedido {
 	private final Integer cantidad;
 	private final double precio_unitario;
 	private final double subtotal;
+	
 	public Integer getId_detalle_pedido() {
 		return id_detalle_pedido;
 	}

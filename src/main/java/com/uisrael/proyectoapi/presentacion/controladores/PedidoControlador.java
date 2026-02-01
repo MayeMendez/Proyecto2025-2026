@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.uisrael.proyectoapi.aplicacion.casosuso.entradas.IPedidoCasoUso;
 import com.uisrael.proyectoapi.dominio.entidades.Pedido;
+import com.uisrael.proyectoapi.infraestructura.repositorios.IDetallePedidoJpaRepositorio;
 import com.uisrael.proyectoapi.presentacion.dto.request.PedidoRequestDTO;
 import com.uisrael.proyectoapi.presentacion.dto.response.PedidoResponseDTO;
 import com.uisrael.proyectoapi.presentacion.mapeadores.IPedidoDTOMapper;
@@ -28,48 +29,59 @@ import jakarta.validation.Valid;
 @RequestMapping("/api/pedido")
 public class PedidoControlador {
 
-	// dependencias de la arquitectura
+	public final IPedidoCasoUso pedidoCasoUso;
+	public final IPedidoDTOMapper mapper;
 
-	public final IPedidoCasoUso pedidoCasoUso; // casos de uso
-	public final IPedidoDTOMapper mapper;// mapeadores
+	private final IDetallePedidoJpaRepositorio detalleRepo;
 
-	// constructor
-	public PedidoControlador(IPedidoCasoUso pedidoCasoUso, IPedidoDTOMapper mapper) {
+	public PedidoControlador(IPedidoCasoUso pedidoCasoUso, IPedidoDTOMapper mapper,
+			IDetallePedidoJpaRepositorio detalleRepo) {
 		this.pedidoCasoUso = pedidoCasoUso;
 		this.mapper = mapper;
+		this.detalleRepo = detalleRepo;
 	}
 
 	@GetMapping
 	public List<PedidoResponseDTO> listar() {
-		return pedidoCasoUso.listar().stream().map(mapper::toResponseDTO).toList();
+
+		return pedidoCasoUso.listar().stream().map(pedido -> {
+			PedidoResponseDTO dto = mapper.toResponseDTO(pedido);
+
+			Integer idDetalle = detalleRepo.buscarPrimeroPorIdPedido(dto.getId_pedido())
+					.map(det -> det.getId_detalle_pedido()).orElse(null);
+
+			dto.setId_detalle_pedido(idDetalle);
+
+			return dto;
+		}).toList();
 	}
 
 	@GetMapping("/{id}")
 	public PedidoResponseDTO obtenerPorId(@PathVariable int id) {
-		return mapper.toResponseDTO(pedidoCasoUso.obtenerPorId(id));
+
+		PedidoResponseDTO dto = mapper.toResponseDTO(pedidoCasoUso.obtenerPorId(id));
+
+		Integer idDetalle = detalleRepo.buscarPrimeroPorIdPedido(dto.getId_pedido())
+				.map(det -> det.getId_detalle_pedido()).orElse(null);
+
+		dto.setId_detalle_pedido(idDetalle);
+
+		return dto;
 	}
 
 	@PostMapping
 	public ResponseEntity<Pedido> crear(@RequestBody PedidoRequestDTO dto) {
 
-	    Pedido pedido = new Pedido(
-	        null,
-	        dto.getId_cliente(),
-	        dto.getId_ruta_entrega(),
-	        dto.getId_repartidor(),
-	        LocalDateTime.parse(dto.getFecha_pedido()),
-	        dto.getFecha_entrega_programada() != null ? LocalDate.parse(dto.getFecha_entrega_programada()) : null,
-	        dto.getEstado(),
-	        dto.getTipo_venta(),
-	        dto.getTotal_pedido()
-	    );
+		Pedido pedido = new Pedido(null, dto.getId_cliente(), dto.getId_ruta_entrega(), dto.getId_repartidor(),
+				LocalDateTime.parse(dto.getFecha_pedido()),
+				dto.getFecha_entrega_programada() != null ? LocalDate.parse(dto.getFecha_entrega_programada()) : null,
+				dto.getEstado(), dto.getTipo_venta(), dto.getTotal_pedido());
 
-	    return ResponseEntity.ok(pedidoCasoUso.crear(pedido));
+		return ResponseEntity.ok(pedidoCasoUso.crear(pedido));
 	}
 
 	@PutMapping("/{id}")
 	public PedidoResponseDTO actualizar(@PathVariable int id, @Valid @RequestBody PedidoRequestDTO request) {
-
 		return mapper.toResponseDTO(pedidoCasoUso.actualizar(id, mapper.toDomain(request)));
 	}
 
@@ -78,5 +90,4 @@ public class PedidoControlador {
 	public void eliminar(@PathVariable int id) {
 		pedidoCasoUso.eliminar(id);
 	}
-
 }
