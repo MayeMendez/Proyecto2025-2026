@@ -11,5 +11,7 @@ public interface IClienteCasoUso {
 	List<Cliente> listar();
 	Cliente actualizar(int id, Cliente cliente);
 	void eliminar(int id);
+	boolean existePorIdentificacion(String identificacion);
+
 	
 }

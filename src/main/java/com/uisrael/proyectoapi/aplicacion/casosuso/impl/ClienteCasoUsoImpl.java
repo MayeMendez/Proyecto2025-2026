@@ -18,6 +18,7 @@ public class ClienteCasoUsoImpl implements IClienteCasoUso{
 		this.repositorio = repositorio;
 	}
 	
+	
 	@Override
 	public Cliente crear(Cliente cliente) {
 		return repositorio.guardar(cliente);
@@ -45,5 +46,11 @@ public class ClienteCasoUsoImpl implements IClienteCasoUso{
 	    obtenerPorId(id);
 	    return repositorio.actualizar(id, cliente);
 	}
+	
+	@Override
+	public boolean existePorIdentificacion(String identificacion) {
+	    return repositorio.existePorIdentificacion(identificacion);
+	}
+
 	
 }

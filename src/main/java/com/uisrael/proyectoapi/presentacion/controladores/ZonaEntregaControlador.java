@@ -2,7 +2,9 @@ package com.uisrael.proyectoapi.presentacion.controladores;
 
 import java.util.List;
 
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -61,10 +63,16 @@ public class ZonaEntregaControlador {
     }
 
     @DeleteMapping("/{id}")
-    @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void eliminar(@PathVariable int id) {
-        zonaEntregaCasoUso.eliminar(id);
+    public ResponseEntity<?> eliminar(@PathVariable Integer id) {
+        try {
+            zonaEntregaCasoUso.eliminar(id);
+            return ResponseEntity.noContent().build();
+        } catch (DataIntegrityViolationException e) {
+            return ResponseEntity.status(HttpStatus.CONFLICT)
+                    .body("No se puede eliminar: la zona tiene rutas asociadas.");
+        }
     }
+
 	
 	
 }

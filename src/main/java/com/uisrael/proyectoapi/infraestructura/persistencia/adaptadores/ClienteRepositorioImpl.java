@@ -9,67 +9,61 @@ import com.uisrael.proyectoapi.infraestructura.persistencia.jpa.ClienteJpa;
 import com.uisrael.proyectoapi.infraestructura.persistencia.mapeadores.IClienteJpaMapper;
 import com.uisrael.proyectoapi.infraestructura.repositorios.IClienteJpaRepositorio;
 
-public class ClienteRepositorioImpl implements IClienteRepositorio{
+public class ClienteRepositorioImpl implements IClienteRepositorio {
 
-	//dependencias
-	private final IClienteJpaRepositorio jpaRepositorio;
-	private final IClienteJpaMapper entityMapper;
-	
-	//constructor
-	public ClienteRepositorioImpl(IClienteJpaRepositorio jpaRepositorio, IClienteJpaMapper entityMapper) {
-	
-		this.jpaRepositorio = jpaRepositorio;
-		this.entityMapper = entityMapper;
-	}
-	
-	
-	@Override
-	public Cliente guardar(Cliente cliente) {
-		ClienteJpa entity = entityMapper.toEntityCrear(cliente);
-		ClienteJpa guardado = jpaRepositorio.save(entity);
-		return entityMapper.toDomain(guardado);
-	}
+    // dependencias
+    private final IClienteJpaRepositorio jpaRepositorio;
+    private final IClienteJpaMapper entityMapper;
 
+    // constructor
+    public ClienteRepositorioImpl(IClienteJpaRepositorio jpaRepositorio, IClienteJpaMapper entityMapper) {
+        this.jpaRepositorio = jpaRepositorio;
+        this.entityMapper = entityMapper;
+    }
 
-	@Override
-	public Optional<Cliente> buscarPorId(int id) {
-		return jpaRepositorio.findById(id).map(entityMapper::toDomain);
-	}
+    @Override
+    public Cliente guardar(Cliente cliente) {
+        ClienteJpa entity = entityMapper.toEntityCrear(cliente);
+        ClienteJpa guardado = jpaRepositorio.save(entity);
+        return entityMapper.toDomain(guardado);
+    }
 
-	@Override
-	public List<Cliente> listarTodos() {
-		return jpaRepositorio.findAll()
-				.stream()
-				.map(entityMapper::toDomain)
-				.toList();
-	}
+    @Override
+    public Optional<Cliente> buscarPorId(int id) {
+        return jpaRepositorio.findById(id).map(entityMapper::toDomain);
+    }
 
-	@Override
-	public void eliminar(int id) {
-		jpaRepositorio.deleteById(id);
-		
-	}
-	
-	@Override
-	public Cliente actualizar(int id, Cliente cliente) {
+    @Override
+    public List<Cliente> listarTodos() {
+        return jpaRepositorio.findAll().stream().map(entityMapper::toDomain).toList();
+    }
 
-	    ClienteJpa entity = jpaRepositorio.findById(id)
-	        .orElseThrow(() -> new RuntimeException("Cliente no encontrado"));
+    @Override
+    public void eliminar(int id) {
+        jpaRepositorio.deleteById(id);
+    }
 
-	    entity.setTipo_cliente(cliente.getTipo_cliente());
-	    entity.setRazon_social(cliente.getRazon_social());
-	    entity.setNombre_comercial(cliente.getNombre_comercial());
-	    entity.setTelefono(cliente.getTelefono());
-	    entity.setEmail(cliente.getEmail());
-	    entity.setDireccion(cliente.getDireccion());
+    @Override
+    public Cliente actualizar(int id, Cliente cliente) {
 
-	  
-	    // entity.setIdentificacion(...); 
+        ClienteJpa entity = jpaRepositorio.findById(id)
+                .orElseThrow(() -> new RuntimeException("Cliente no encontrado"));
 
-	    ClienteJpa guardado = jpaRepositorio.save(entity);
-	    return entityMapper.toDomain(guardado);
-	}
+        entity.setTipo_cliente(cliente.getTipo_cliente());
+        entity.setRazon_social(cliente.getRazon_social());
+        entity.setNombre_comercial(cliente.getNombre_comercial());
+        entity.setTelefono(cliente.getTelefono());
+        entity.setEmail(cliente.getEmail());
+        entity.setDireccion(cliente.getDireccion());
 
-	
+        // entity.setIdentificacion(...);
 
+        ClienteJpa guardado = jpaRepositorio.save(entity);
+        return entityMapper.toDomain(guardado);
+    }
+
+    @Override
+    public boolean existePorIdentificacion(String identificacion) {
+        return jpaRepositorio.countByIdentificacion(identificacion) > 0;
+    }
 }

@@ -12,6 +12,6 @@ public interface IClienteRepositorio {
 	List<Cliente> listarTodos();
 	Cliente actualizar(int id, Cliente cliente);
 	void eliminar(int id);
-	
+	boolean existePorIdentificacion(String identificacion);
 
 }

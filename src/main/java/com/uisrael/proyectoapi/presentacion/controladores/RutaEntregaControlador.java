@@ -71,9 +71,14 @@ public class RutaEntregaControlador {
     }
 
     @DeleteMapping("/{id}")
-    @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void eliminar(@PathVariable int id) {
-        rutaEntregaCasoUso.eliminar(id);
+    public ResponseEntity<?> eliminar(@PathVariable Integer id) {
+        try {
+            rutaEntregaCasoUso.eliminar(id);
+            return ResponseEntity.noContent().build();
+        } catch (org.springframework.dao.DataIntegrityViolationException e) {
+            return ResponseEntity.status(409).body("No se puede eliminar: la ruta está asociada a pedidos.");
+        }
     }
+
 	
 }

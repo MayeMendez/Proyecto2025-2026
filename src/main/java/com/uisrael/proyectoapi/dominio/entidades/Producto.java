@@ -10,15 +10,13 @@ public final class Producto {
 	private final String unidad_medida;
 	private final boolean activo;
 	
-	public Producto(int id_producto, String nombre_producto, String categoria, double precio_unitario, int stock_actual,
-			String unidad_medida, boolean activo) {
-		super();
+	public Producto(int id_producto, String nombre_producto, String categoria, double precio_unitario, int stock_actual, boolean activo) {
 		this.id_producto = id_producto;
 		this.nombre_producto = nombre_producto;
 		this.categoria = categoria;
 		this.precio_unitario = precio_unitario;
 		this.stock_actual = stock_actual;
-		this.unidad_medida = unidad_medida;
+		this.unidad_medida ="FUNDA" ;
 		this.activo = activo;
 	}
 
@@ -56,6 +54,8 @@ public final class Producto {
 				+ categoria + ", precio_unitario=" + precio_unitario + ", stock_actual=" + stock_actual
 				+ ", unidad_medida=" + unidad_medida + ", activo=" + activo + "]";
 	}
+	
+	 
 
 	
 }

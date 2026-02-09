@@ -1,5 +1,6 @@
 package com.uisrael.proyectoapi.infraestructura.persistencia.jpa;
 
+import java.beans.Transient;
 import java.io.Serializable;
 
 import jakarta.persistence.Column;
@@ -42,5 +43,6 @@ public class ClienteJpa implements Serializable {
 
 	@Column(name = "direccion", nullable = false, length = 200)
 	private String direccion;
+
 
 }
